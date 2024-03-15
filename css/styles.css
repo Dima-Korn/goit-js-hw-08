@@ -19,9 +19,28 @@
     padding: 0;
   }
 
-  .gallery {
+  img {
+    display: block;
+    object-fit: cover;
+  }
+
+    .gallery { 
+     max-width: 1440px; 
     padding: 24px 156px;
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
+  }
+
+  .gallery-item {
+    overflow: hidden; 
+  }
+  
+  .gallery-item:hover {
+    transform: scale(1.044);
+    transition: ease 0.3s;
+  }
+  
+  .gallery-image {
+    transition: transform 0.3s; 
   }

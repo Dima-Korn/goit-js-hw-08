@@ -64,23 +64,50 @@ const images = [
       },
     ];
 
-    const galleryBox = document.querySelector(".gallery");
-galleryBox.insertAdjacentHTML("beforeend", creteMarkup(images));
+const galleryBox = document.querySelector(".gallery");
+galleryBox.insertAdjacentHTML("beforeend", createMarkup(images));
+galleryBox.addEventListener("click", handleGalleryClick)
 
-function creteMarkup(arr){
+
+function createMarkup(arr){
     return arr
     .map((image) => `
     <li class="gallery-item">
-    <a class="gallery-link" href="large-image.jpg">
+    <a class="gallery-link" href="${image.original}">
       <img
         class="gallery-image"
         src="${image.preview}"
         data-source="${image.original}"
         alt="${image.description}"
-        width = 360px;
+        width="360"
+          height="200"
       />
     </a>
   </li>
   ` )
   .join("")
 }
+
+function handleGalleryClick(event) {
+    event.preventDefault();
+    if (event.target.classList.contains('gallery-image')) {
+        const largeImageSrc = event.target.dataset.source; 
+        openModal(largeImageSrc); 
+    }
+}
+
+function openModal(modalImage) {
+    const modal = basicLightbox.create(`<img src="${modalImage}" alt="Large Image">`);
+    modal.show();
+
+    const closeModalOnEsc = function(event) {
+        if (event.key === "Escape") {
+            modal.close(); 
+            window.removeEventListener("keydown", closeModalOnEsc); 
+        }
+    };
+
+    window.addEventListener("keydown", closeModalOnEsc);
+}
+
+
